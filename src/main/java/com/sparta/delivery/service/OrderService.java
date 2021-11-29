@@ -1,7 +1,9 @@
 package com.sparta.delivery.service;
 
 import com.sparta.delivery.dto.OrderFoodsRequestDto;
+import com.sparta.delivery.dto.OrderFoodsResponseDto;
 import com.sparta.delivery.dto.OrderMenuRequestDto;
+import com.sparta.delivery.dto.OrderMenuResponseDto;
 import com.sparta.delivery.models.Food;
 import com.sparta.delivery.models.OrderFood;
 import com.sparta.delivery.models.OrderMenu;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +27,7 @@ public class OrderService {
     private final FoodRepository foodRepository;
     private final OrderFoodRepository orderFoodRepository;
 
-    public OrderMenu requestOrder(OrderMenuRequestDto orderMenuRequestDto) {
+    public OrderMenuResponseDto requestOrder(OrderMenuRequestDto orderMenuRequestDto) {
         // 레스토랑 ID로 레스토랑 이름 탐색
         Restaurant restaurant = restaurantRepository.findById(orderMenuRequestDto.getRestaurantId()).orElse(null);
         // 유효하지 않은 레스토랑 정보일 경우 에러 발생
@@ -34,6 +37,7 @@ public class OrderService {
 
         // 식품 목록 생성
         List<OrderFood> foods = new ArrayList<>();
+        List<OrderFoodsResponseDto> foodsDto = new ArrayList<>();
 
         // 전체 가격 계산. 배달비 포함하기 때문에 기본값으로 추가.
         int totalPrice = restaurant.getDeliveryFee();
@@ -54,6 +58,12 @@ public class OrderService {
 
             // OrderFoods 생성 및 리스트에 주입
             foods.add(new OrderFood(quantity, food, restaurant));
+
+            // 출력용 Dto 생성
+            OrderFoodsResponseDto orderFoodsResponseDto = new OrderFoodsResponseDto(food.getName(),
+                    quantity,
+                    food.getPrice() * quantity);
+            foodsDto.add(orderFoodsResponseDto);
         }
 
         if (totalPrice < restaurant.getMinOrderPrice()) {
@@ -62,15 +72,41 @@ public class OrderService {
 
         OrderMenu orderMenu = orderMenuRepository.save(new OrderMenu(totalPrice, restaurant));
 
-        for(OrderFood orderFood : foods){
+        for (OrderFood orderFood : foods) {
             orderFood.setOrderMenu(orderMenu);
             orderFoodRepository.save(orderFood);
         }
 
-        return orderMenu;
+        OrderMenuResponseDto orderMenuResponseDto = new OrderMenuResponseDto(restaurant.getName(),
+                foodsDto,
+                restaurant.getDeliveryFee(),
+                totalPrice);
+
+        return orderMenuResponseDto;
     }
 
-    public List<OrderMenu> getOrders() {
-        return orderMenuRepository.findAll();
+    public List<OrderMenuResponseDto> getOrders() {
+        List<OrderMenu> orderMenuList = orderMenuRepository.findAll();
+        List<OrderMenuResponseDto> response = new ArrayList<>();
+
+        for (OrderMenu orderMenu : orderMenuList) {
+            String restaurantName = orderMenu.getRestaurant().getName();
+            int deliveryFee = orderMenu.getRestaurant().getDeliveryFee();
+            int totalPrice = orderMenu.getTotalPrice();
+
+            // 주문한 음식 목록 불러오기
+            List<OrderFoodsResponseDto> orderFoodsResponseDtos = new ArrayList<>();
+            List<OrderFood> orderFoodList = orderFoodRepository.findAllByOrderMenu(orderMenu);
+            for (OrderFood orderFood : orderFoodList) {
+                String foodName = orderFood.getFood().getName();
+                int quantity = orderFood.getQuantity();
+                int price = quantity * orderFood.getFood().getPrice();
+                orderFoodsResponseDtos.add(new OrderFoodsResponseDto(foodName, quantity, price));
+            }
+
+            response.add(new OrderMenuResponseDto(restaurantName, orderFoodsResponseDtos, deliveryFee, totalPrice));
+        }
+
+        return response;
     }
 }
