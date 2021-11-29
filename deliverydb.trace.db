@@ -1,0 +1,321 @@
+2021-11-29 19:02:51 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE ORDER[*] (
+       ID BIGINT NOT NULL,
+        DELIVERY_FEE INTEGER NOT NULL,
+        RESTAURANT_NAME VARCHAR(255) NOT NULL,
+        TOTAL_PRICE INTEGER NOT NULL,
+        PRIMARY KEY (ID)
+    )"; expected "identifier"; SQL statement:
+
+    create table order (
+       id bigint not null,
+        delivery_fee integer not null,
+        restaurant_name varchar(255) not null,
+        total_price integer not null,
+        primary key (id)
+    ) [42001-200]
+2021-11-29 19:11:31 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE ORDER[*] (
+       ID BIGINT NOT NULL,
+        DELIVERY_FEE INTEGER NOT NULL,
+        RESTAURANT_NAME VARCHAR(255) NOT NULL,
+        TOTAL_PRICE INTEGER NOT NULL,
+        PRIMARY KEY (ID)
+    )"; expected "identifier"; SQL statement:
+
+    create table order (
+       id bigint not null,
+        delivery_fee integer not null,
+        restaurant_name varchar(255) not null,
+        total_price integer not null,
+        primary key (id)
+    ) [42001-200]
+2021-11-29 19:15:23 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE ORDER[*] (
+       ID BIGINT NOT NULL,
+        DELIVERY_FEE INTEGER NOT NULL,
+        RESTAURANT_NAME VARCHAR(255) NOT NULL,
+        TOTAL_PRICE INTEGER NOT NULL,
+        PRIMARY KEY (ID)
+    )"; expected "identifier"; SQL statement:
+
+    create table order (
+       id bigint not null,
+        delivery_fee integer not null,
+        restaurant_name varchar(255) not null,
+        total_price integer not null,
+        primary key (id)
+    ) [42001-200]
+2021-11-29 19:15:23 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    ALTER TABLE ORDER_FOODS 
+       ADD CONSTRAINT FK5RMUDK2J352GKPUHS8I5T293Q 
+       FOREIGN KEY (FOOD_ID) 
+       REFERENCES ORDER[*]"; expected "identifier"; SQL statement:
+
+    alter table order_foods 
+       add constraint FK5rmudk2j352gkpuhs8i5t293q 
+       foreign key (food_id) 
+       references order [42001-200]
+2021-11-29 19:25:18 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE ORDER[*] (
+       ID BIGINT NOT NULL,
+        DELIVERY_FEE INTEGER NOT NULL,
+        RESTAURANT_NAME VARCHAR(255) NOT NULL,
+        TOTAL_PRICE INTEGER NOT NULL,
+        PRIMARY KEY (ID)
+    )"; expected "identifier"; SQL statement:
+
+    create table order (
+       id bigint not null,
+        delivery_fee integer not null,
+        restaurant_name varchar(255) not null,
+        total_price integer not null,
+        primary key (id)
+    ) [42001-200]
+2021-11-29 19:25:18 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    ALTER TABLE ORDER_FOODS 
+       ADD CONSTRAINT FK5RMUDK2J352GKPUHS8I5T293Q 
+       FOREIGN KEY (FOOD_ID) 
+       REFERENCES ORDER[*]"; expected "identifier"; SQL statement:
+
+    alter table order_foods 
+       add constraint FK5rmudk2j352gkpuhs8i5t293q 
+       foreign key (food_id) 
+       references order [42001-200]
+2021-11-29 19:30:46 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE ORDER[*] (
+       ID BIGINT NOT NULL,
+        DELIVERY_FEE INTEGER NOT NULL,
+        RESTAURANT_NAME VARCHAR(255) NOT NULL,
+        TOTAL_PRICE INTEGER NOT NULL,
+        PRIMARY KEY (ID)
+    )"; expected "identifier"; SQL statement:
+
+    create table order (
+       id bigint not null,
+        delivery_fee integer not null,
+        restaurant_name varchar(255) not null,
+        total_price integer not null,
+        primary key (id)
+    ) [42001-200]
+2021-11-29 19:30:46 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    ALTER TABLE ORDER_FOODS 
+       ADD CONSTRAINT FK5RMUDK2J352GKPUHS8I5T293Q 
+       FOREIGN KEY (FOOD_ID) 
+       REFERENCES ORDER[*]"; expected "identifier"; SQL statement:
+
+    alter table order_foods 
+       add constraint FK5rmudk2j352gkpuhs8i5t293q 
+       foreign key (food_id) 
+       references order [42001-200]
+2021-11-29 19:32:16 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE ORDER[*] (
+       ID BIGINT NOT NULL,
+        DELIVERY_FEE INTEGER NOT NULL,
+        RESTAURANT_NAME VARCHAR(255) NOT NULL,
+        TOTAL_PRICE INTEGER NOT NULL,
+        PRIMARY KEY (ID)
+    )"; expected "identifier"; SQL statement:
+
+    create table order (
+       id bigint not null,
+        delivery_fee integer not null,
+        restaurant_name varchar(255) not null,
+        total_price integer not null,
+        primary key (id)
+    ) [42001-200]
+2021-11-29 19:32:16 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    ALTER TABLE ORDER_FOODS 
+       ADD CONSTRAINT FK5RMUDK2J352GKPUHS8I5T293Q 
+       FOREIGN KEY (FOOD_ID) 
+       REFERENCES ORDER[*]"; expected "identifier"; SQL statement:
+
+    alter table order_foods 
+       add constraint FK5rmudk2j352gkpuhs8i5t293q 
+       foreign key (food_id) 
+       references order [42001-200]
+2021-11-29 19:58:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE ORDER[*] (
+       ID BIGINT NOT NULL,
+        DELIVERY_FEE INTEGER NOT NULL,
+        RESTAURANT_NAME VARCHAR(255) NOT NULL,
+        TOTAL_PRICE INTEGER NOT NULL,
+        PRIMARY KEY (ID)
+    )"; expected "identifier"; SQL statement:
+
+    create table order (
+       id bigint not null,
+        delivery_fee integer not null,
+        restaurant_name varchar(255) not null,
+        total_price integer not null,
+        primary key (id)
+    ) [42001-200]
+2021-11-29 19:58:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    ALTER TABLE ORDER_FOODS 
+       ADD CONSTRAINT FK5RMUDK2J352GKPUHS8I5T293Q 
+       FOREIGN KEY (FOOD_ID) 
+       REFERENCES ORDER[*]"; expected "identifier"; SQL statement:
+
+    alter table order_foods 
+       add constraint FK5rmudk2j352gkpuhs8i5t293q 
+       foreign key (food_id) 
+       references order [42001-200]
+2021-11-29 20:04:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE ORDER[*] (
+       ID BIGINT NOT NULL,
+        DELIVERY_FEE INTEGER NOT NULL,
+        RESTAURANT_NAME VARCHAR(255) NOT NULL,
+        TOTAL_PRICE INTEGER NOT NULL,
+        PRIMARY KEY (ID)
+    )"; expected "identifier"; SQL statement:
+
+    create table order (
+       id bigint not null,
+        delivery_fee integer not null,
+        restaurant_name varchar(255) not null,
+        total_price integer not null,
+        primary key (id)
+    ) [42001-200]
+2021-11-29 20:04:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    ALTER TABLE ORDER_FOODS 
+       ADD CONSTRAINT FKO0KDA4EHBVMCBECJDSSVHUN1L 
+       FOREIGN KEY (FOODS_ID) 
+       REFERENCES ORDER[*]"; expected "identifier"; SQL statement:
+
+    alter table order_foods 
+       add constraint FKo0kda4ehbvmcbecjdssvhun1l 
+       foreign key (foods_id) 
+       references order [42001-200]
+2021-11-29 20:07:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE ORDER[*] (
+       ID BIGINT NOT NULL,
+        DELIVERY_FEE INTEGER NOT NULL,
+        RESTAURANT_NAME VARCHAR(255) NOT NULL,
+        TOTAL_PRICE INTEGER NOT NULL,
+        PRIMARY KEY (ID)
+    )"; expected "identifier"; SQL statement:
+
+    create table order (
+       id bigint not null,
+        delivery_fee integer not null,
+        restaurant_name varchar(255) not null,
+        total_price integer not null,
+        primary key (id)
+    ) [42001-200]
+2021-11-29 20:07:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    ALTER TABLE ORDER_FOODS 
+       ADD CONSTRAINT FKCDDD3BWULK5L04UHQ9GW81D7S 
+       FOREIGN KEY (FOOD_ID_ID) 
+       REFERENCES ORDER[*]"; expected "identifier"; SQL statement:
+
+    alter table order_foods 
+       add constraint FKcddd3bwulk5l04uhq9gw81d7s 
+       foreign key (food_id_id) 
+       references order [42001-200]
+2021-11-29 20:07:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    ALTER TABLE ORDER_FOODS 
+       ADD CONSTRAINT FKO0KDA4EHBVMCBECJDSSVHUN1L 
+       FOREIGN KEY (FOODS_ID) 
+       REFERENCES ORDER[*]"; expected "identifier"; SQL statement:
+
+    alter table order_foods 
+       add constraint FKo0kda4ehbvmcbecjdssvhun1l 
+       foreign key (foods_id) 
+       references order [42001-200]
+2021-11-29 20:17:10 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE ORDER[*] (
+       ID BIGINT NOT NULL,
+        TOTAL_PRICE INTEGER NOT NULL,
+        RESTAURANT_ID BIGINT NOT NULL,
+        PRIMARY KEY (ID)
+    )"; expected "identifier"; SQL statement:
+
+    create table order (
+       id bigint not null,
+        total_price integer not null,
+        restaurant_id bigint not null,
+        primary key (id)
+    ) [42001-200]
+2021-11-29 20:17:10 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    ALTER TABLE ORDER[*] 
+       ADD CONSTRAINT FK64RCH5G46UE4A83WW6CQ7R92W 
+       FOREIGN KEY (RESTAURANT_ID) 
+       REFERENCES RESTAURANT"; expected "identifier"; SQL statement:
+
+    alter table order 
+       add constraint FK64rch5g46ue4a83ww6cq7r92w 
+       foreign key (restaurant_id) 
+       references restaurant [42001-200]
+2021-11-29 20:17:10 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    ALTER TABLE ORDER_FOODS 
+       ADD CONSTRAINT FKGT6H5STFMEUDIUEQV38T8R9XP 
+       FOREIGN KEY (ORDER_ID) 
+       REFERENCES ORDER[*]"; expected "identifier"; SQL statement:
+
+    alter table order_foods 
+       add constraint FKgt6h5stfmeudiueqv38t8r9xp 
+       foreign key (order_id) 
+       references order [42001-200]
+2021-11-29 20:23:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE ORDER[*] (
+       ID BIGINT NOT NULL,
+        TOTAL_PRICE INTEGER NOT NULL,
+        RESTAURANT_ID BIGINT NOT NULL,
+        PRIMARY KEY (ID)
+    )"; expected "identifier"; SQL statement:
+
+    create table order (
+       id bigint not null,
+        total_price integer not null,
+        restaurant_id bigint not null,
+        primary key (id)
+    ) [42001-200]
+2021-11-29 20:23:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    ALTER TABLE ORDER[*] 
+       ADD CONSTRAINT FK64RCH5G46UE4A83WW6CQ7R92W 
+       FOREIGN KEY (RESTAURANT_ID) 
+       REFERENCES RESTAURANT"; expected "identifier"; SQL statement:
+
+    alter table order 
+       add constraint FK64rch5g46ue4a83ww6cq7r92w 
+       foreign key (restaurant_id) 
+       references restaurant [42001-200]
+2021-11-29 20:23:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    ALTER TABLE ORDER_FOODS 
+       ADD CONSTRAINT FKGT6H5STFMEUDIUEQV38T8R9XP 
+       FOREIGN KEY (ORDER_ID) 
+       REFERENCES ORDER[*]"; expected "identifier"; SQL statement:
+
+    alter table order_foods 
+       add constraint FKgt6h5stfmeudiueqv38t8r9xp 
+       foreign key (order_id) 
+       references order [42001-200]
+2021-11-29 20:36:49 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE *[*] FROM RESTAURANT"; expected "identifier"; SQL statement:
+delete * from restaurant [42001-200]
+2021-11-29 20:37:11 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE *[*] FROM FOOD"; expected "identifier"; SQL statement:
+delete * from food [42001-200]
