@@ -7,5 +7,5 @@ import java.util.List;
 @Getter
 public class OrderMenuRequestDto {
     private Long restaurantId;
-    List<OrderFoodsRequestDto> foods;
+    private List<OrderFoodsRequestDto> foods;
 }

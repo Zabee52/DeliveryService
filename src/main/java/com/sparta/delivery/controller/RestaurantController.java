@@ -1,7 +1,6 @@
 package com.sparta.delivery.controller;
 
 import com.sparta.delivery.dto.RestaurantDto;
-import com.sparta.delivery.models.Restaurant;
 import com.sparta.delivery.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +16,12 @@ public class RestaurantController {
     private final RestaurantService restaurantService;
 
     @GetMapping("/restaurants")
-    public List<Restaurant> getRestaurants(){
+    public List<RestaurantDto> getRestaurants(){
         return restaurantService.getRestaurants();
     }
 
     @PostMapping("/restaurant/register")
-    public String registerRestaurant(@RequestBody RestaurantDto restaurantDto){
+    public RestaurantDto registerRestaurant(@RequestBody RestaurantDto restaurantDto){
         return restaurantService.resgisterRestaurant(restaurantDto);
     }
 }

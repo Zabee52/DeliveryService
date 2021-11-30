@@ -22,12 +22,13 @@ public class Food {
     @Column(nullable = false)
     private int price;
 
-    @OneToMany(mappedBy = "food")
-    private final List<OrderFood> orderFoods = new ArrayList<>();
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Restaurant restaurant;
+
+    @OneToMany(mappedBy = "food")
+    private final List<OrderFood> orderFoods = new ArrayList<>();
+
 
     public Food(Restaurant restaurant, FoodDto foodDto) {
         this.restaurant = restaurant;

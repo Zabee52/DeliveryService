@@ -25,14 +25,9 @@ public class OrderFood {
     @JoinColumn(nullable = false)
     private OrderMenu orderMenu;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    private Restaurant restaurant;
-
-    public OrderFood(int quantity, Food food, Restaurant restaurant) {
+    public OrderFood(int quantity, Food food) {
         this.quantity = quantity;
         this.food = food;
-        this.restaurant = restaurant;
     }
 
     public void setOrderMenu(OrderMenu orderMenu) {
