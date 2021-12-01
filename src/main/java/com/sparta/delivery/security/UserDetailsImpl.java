@@ -1,6 +1,6 @@
 package com.sparta.delivery.security;
 
-import com.sparta.assignment.models.User;
+import com.sparta.delivery.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,12 +16,6 @@ public class UserDetailsImpl implements UserDetails {
         this.user = user;
     }
 
-    public Long getUserId(){ return user.getId(); }
-
-    public User getUser() {
-        return user;
-    }
-
     @Override
     public String getPassword() {
         return user.getPassword();
@@ -29,7 +23,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getNickname();
+        return user.getUserId();
     }
 
     @Override
@@ -54,7 +48,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority simpleAuthority = new SimpleGrantedAuthority(user.getPermission());
+        SimpleGrantedAuthority simpleAuthority = new SimpleGrantedAuthority(user.getRole().getAuthority());
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(simpleAuthority);
 

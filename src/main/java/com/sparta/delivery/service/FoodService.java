@@ -43,26 +43,22 @@ public class FoodService {
 
     public List<FoodDto> getFoods(Long restaurantId) {
         // 음식점별 음식 목록을 출력하는 메소드
-        // 1. 음식점의 음식 정보 리스트 호출
+        // 음식점의 음식 정보 리스트 호출
         List<Food> foods = foodRepository.findByRestaurantId(restaurantId);
-        // 2. 음식 정보들을 매핑해줄 Dto List 생성
-        List<FoodDto> response = new ArrayList<>();
-
-        for (Food food : foods) {
-            // Dto List에 추가
-            response.add(foodDtoSetting(food));
-        }
 
         // 반환
-        return response;
+        return foodDtoListSetting(foods);
     }
 
-    private FoodDto foodDtoSetting(Food food) {
-        return new FoodDto(
-                food.getId(),
-                food.getName(),
-                food.getPrice()
-        );
+    private List<FoodDto> foodDtoListSetting(List<Food> foods){
+        List<FoodDto> result = new ArrayList<>();
+        for(Food food : foods){
+            result.add(new FoodDto(
+                    food.getId(),
+                    food.getName(),
+                    food.getPrice()));
+        }
+        return result;
     }
 
     private void foodDtoValidCheck(Long restaurantId, FoodDto foodDto, List<Food> foodList) {

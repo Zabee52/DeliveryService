@@ -33,46 +33,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.authorizeRequests()
-                // image 폴더를 login 없이 허용
-                .antMatchers("/images/**").permitAll()
-                // css 폴더를 login 없이 허용
-                .antMatchers("/css/**").permitAll()
                 // 회원 관리 처리 API 전부를 login 없이 허용
                 .antMatchers("/user/**").permitAll()
-                // 폰트 폴더를 login 없이 허용
-                .antMatchers("/fonts/**").permitAll()
-                // 자바스크립트 폴더를 login 없이 허용
-                .antMatchers("/js/**").permitAll()
-                // 게시판 관련 css vendor 폴더를 login 없이 허용
-                .antMatchers("/vendor/**").permitAll()
-                // 게시글 목록 및 게시글 조회는 로그인 없이 허용
-                .antMatchers("/board").permitAll()
-                .antMatchers(HttpMethod.GET, "/board/post/{id}").permitAll()
                 // 그 외 어떤 요청이든 '인증'
                 .anyRequest().authenticated()
                 .and()
-                    // [로그인 기능]
+                    // 로그인 기능 허용
                     .formLogin()
-                    // 로그인 View 제공 (GET /login)
-                    .loginPage("/")
-                    // 로그인 처리 (POST /login)
-                    .loginProcessingUrl("/user/login")
-                    // 로그인 처리 후 성공 시 URL
                     .defaultSuccessUrl("/")
-                    // 로그인 처리 후 실패 시 URL
-                    .failureUrl("/user/login?error")
+                    // 로그인 처리 (POST /user/login)
+                    .loginProcessingUrl("/user/login")
                     .permitAll()
                 .and()
-                    // [로그아웃 기능]
+                    // 로그아웃 기능 허용
                     .logout()
-                    // 로그아웃 요청 처리 URL
-                    .logoutUrl("/user/logout")
-                    // 로그아웃 성공시 글 목록으로
-                    .logoutSuccessUrl("/board")
-                    .permitAll()
-                .and()
-                    .exceptionHandling()
-                    // "접근 불가" 페이지 URL 설정
-                    .accessDeniedPage("/forbidden");
+                    .permitAll();
     }
 }
+

@@ -17,12 +17,12 @@ public class OrderMenu {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
-    private int totalPrice;
-
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Restaurant restaurant;
+
+    @Column(nullable = false)
+    private int totalPrice;
 
     @Column(nullable = false)
     private int deliveryFee;

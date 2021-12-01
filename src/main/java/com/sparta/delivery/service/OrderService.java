@@ -102,12 +102,11 @@ public class OrderService {
         List<OrderMenuResponseDto> result = new ArrayList<>();
 
         for (OrderMenu orderMenu : orderMenuList) {
-            // 주문한 음식 목록 불러오기
-            List<OrderFoodsResponseDto> orderFoodsResponseDtos = getOrderFoodsResponseDtos(orderMenu);
-
+            // OrderMenuResponseDto 구성
+            // name, Foods, deliveryFee, totalPrice
             result.add(new OrderMenuResponseDto(
                     orderMenu.getRestaurant().getName(),
-                    orderFoodsResponseDtos,
+                    getOrderFoodsResponseDtos(orderMenu),
                     orderMenu.getDeliveryFee(),
                     orderMenu.getTotalPrice()));
         }
@@ -123,6 +122,7 @@ public class OrderService {
             String foodName = orderFood.getFood().getName();
             int quantity = orderFood.getQuantity();
             int price = quantity * orderFood.getFood().getPrice();
+
             result.add(new OrderFoodsResponseDto(foodName, quantity, price));
         }
 

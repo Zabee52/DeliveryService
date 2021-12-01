@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Title</title>
+</head>
+<script>
+    function restaurant(){
+        let data =
+            {
+                name: "쉐이크쉑 청담점",
+                minOrderPrice: 5000,
+                deliveryFee: 2000,
+                x: 4,
+                y: 3
+            };
+
+        $.ajax({
+            type: 'POST',
+            url: '/restaurant/register',
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (response) {
+                console.log(response);
+            }
+        });
+    }
+
+    function foods(){
+        let data2 =
+            [
+                {
+                    name: "쉑버거 더블",
+                    price: 10900
+                },
+                {
+                    name: "치즈 감자튀김",
+                    price: 4900
+                },
+                {
+                    name: "쉐이크",
+                    price: 5900
+                }
+            ];
+
+        $.ajax({
+            type: 'POST',
+            url: '/restaurant/1/food/register',
+            data: JSON.stringify(data2),
+            contentType: "application/json",
+            success: function (response) {
+                console.log(response);
+            }
+        })
+    }
+</script>
+<body>
+login complete!
+<Button onclick="restaurant()">레스토랑 추가</Button>
+<Button onclick="foods()">음식 추가</Button>
+</body>
+</html>
