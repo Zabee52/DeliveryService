@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class OrderMenu {
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -30,7 +30,7 @@ public class OrderMenu {
     @OneToMany(mappedBy = "orderMenu")
     private List<OrderFood> foods = new ArrayList<>();
 
-    public OrderMenu(Restaurant restaurant, int totalPrice, int deliveryFee) {
+    public Orders(Restaurant restaurant, int totalPrice, int deliveryFee) {
         this.restaurant = restaurant;
         this.totalPrice = totalPrice;
         this.deliveryFee = deliveryFee;

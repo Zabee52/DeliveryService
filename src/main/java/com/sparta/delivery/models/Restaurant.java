@@ -32,7 +32,7 @@ public class Restaurant {
     private int y;
 
     @OneToMany(mappedBy = "restaurant")
-    private final List<OrderMenu> orderMenuList = new ArrayList<>();
+    private final List<Orders> orderMenuList = new ArrayList<>();
 
     public Restaurant(RestaurantRequestDto restaurantDto) {
         this.name = restaurantDto.getName();

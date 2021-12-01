@@ -22,14 +22,14 @@ public class OrderFood {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
-    private OrderMenu orderMenu;
+    private Orders orderMenu;
 
     public OrderFood(int quantity, Food food) {
         this.quantity = quantity;
         this.food = food;
     }
 
-    public void setOrderMenu(OrderMenu orderMenu) {
+    public void setOrderMenu(Orders orderMenu) {
         this.orderMenu = orderMenu;
     }
 }

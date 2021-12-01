@@ -6,7 +6,7 @@ import com.sparta.delivery.dto.OrderMenuRequestDto;
 import com.sparta.delivery.dto.OrderMenuResponseDto;
 import com.sparta.delivery.models.Food;
 import com.sparta.delivery.models.OrderFood;
-import com.sparta.delivery.models.OrderMenu;
+import com.sparta.delivery.models.Orders;
 import com.sparta.delivery.models.Restaurant;
 import com.sparta.delivery.repository.FoodRepository;
 import com.sparta.delivery.repository.OrderFoodRepository;
@@ -71,7 +71,7 @@ public class OrderService {
         int deliveryFee = deliveryFeeCalcProc(restaurant, orderMenuRequestDto.getX(), orderMenuRequestDto.getY());
         totalPrice += deliveryFee;
 
-        OrderMenu orderMenu = orderMenuRepository.save(new OrderMenu(restaurant, totalPrice, deliveryFee));
+        Orders orderMenu = orderMenuRepository.save(new Orders(restaurant, totalPrice, deliveryFee));
 
         for (OrderFood orderFood : foods) {
             orderFood.setOrderMenu(orderMenu);
@@ -98,10 +98,10 @@ public class OrderService {
         return getOrderMenuResponseDtos(orderMenuRepository.findAll());
     }
 
-    private List<OrderMenuResponseDto> getOrderMenuResponseDtos(List<OrderMenu> orderMenuList) {
+    private List<OrderMenuResponseDto> getOrderMenuResponseDtos(List<Orders> orderMenuList) {
         List<OrderMenuResponseDto> result = new ArrayList<>();
 
-        for (OrderMenu orderMenu : orderMenuList) {
+        for (Orders orderMenu : orderMenuList) {
             // OrderMenuResponseDto 구성
             // name, Foods, deliveryFee, totalPrice
             result.add(new OrderMenuResponseDto(
@@ -114,7 +114,7 @@ public class OrderService {
         return result;
     }
 
-    private List<OrderFoodsResponseDto> getOrderFoodsResponseDtos(OrderMenu orderMenu) {
+    private List<OrderFoodsResponseDto> getOrderFoodsResponseDtos(Orders orderMenu) {
         List<OrderFoodsResponseDto> result = new ArrayList<>();
 
         List<OrderFood> orderFoodList = orderFoodRepository.findAllByOrderMenu(orderMenu);
