@@ -31,9 +31,6 @@ public class Restaurant {
     @Column(nullable = false)
     private int y;
 
-    @OneToMany(mappedBy = "restaurant")
-    private final List<Orders> orderMenuList = new ArrayList<>();
-
     public Restaurant(RestaurantRequestDto restaurantDto) {
         this.name = restaurantDto.getName();
         this.minOrderPrice = restaurantDto.getMinOrderPrice();

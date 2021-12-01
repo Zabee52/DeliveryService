@@ -10,7 +10,7 @@ import com.sparta.delivery.models.Orders;
 import com.sparta.delivery.models.Restaurant;
 import com.sparta.delivery.repository.FoodRepository;
 import com.sparta.delivery.repository.OrderFoodRepository;
-import com.sparta.delivery.repository.OrderMenuRepository;
+import com.sparta.delivery.repository.OrdersRepository;
 import com.sparta.delivery.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class OrderService {
-    private final OrderMenuRepository orderMenuRepository;
+    private final OrdersRepository orderMenuRepository;
     private final RestaurantRepository restaurantRepository;
     private final FoodRepository foodRepository;
     private final OrderFoodRepository orderFoodRepository;

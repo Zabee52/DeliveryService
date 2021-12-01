@@ -26,10 +26,6 @@ public class Food {
     @JoinColumn(nullable = false)
     private Restaurant restaurant;
 
-    @OneToMany(mappedBy = "food")
-    private final List<OrderFood> orderFoods = new ArrayList<>();
-
-
     public Food(Restaurant restaurant, FoodDto foodDto) {
         this.restaurant = restaurant;
         this.name = foodDto.getName();

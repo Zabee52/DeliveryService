@@ -1,5 +1,6 @@
 package com.sparta.delivery.service;
 
+import com.sparta.delivery.dto.OrderFoodsRequestDto;
 import com.sparta.delivery.dto.RestaurantRequestDto;
 import com.sparta.delivery.dto.RestaurantResponseDto;
 import com.sparta.delivery.models.Restaurant;
@@ -17,7 +18,7 @@ public class RestaurantService {
 
     public List<RestaurantResponseDto> getRestaurants(int x, int y) {
         // 모든 음식점 목록을 출력하는 메소드
-        List<Restaurant> restaurantList = restaurantRepository.findAllByXBetweenAndYBetween(x-3, x+3, y-3, y+3);
+        List<Restaurant> restaurantList = restaurantRepository.findAllByXBetweenAndYBetween(x - 3, x + 3, y - 3, y + 3);
         List<RestaurantResponseDto> response = new ArrayList<>();
 
         for (Restaurant restaurant : restaurantList) {
@@ -60,7 +61,7 @@ public class RestaurantService {
             throw new IllegalArgumentException("배달비는 0원 이상 10,000원 이하로 입력해주세요.");
         } else if (deliveryFee % 500 != 0) {
             throw new IllegalArgumentException("배달비는 500원 단위로 입력해주세요.");
-        }else if (x < 0 || x > 99 || y < 0 || y > 99) {
+        } else if (x < 0 || x > 99 || y < 0 || y > 99) {
             throw new IllegalArgumentException("위치는 0부터 99까지만 입력 가능합니다.");
         }
     }
