@@ -8,4 +8,7 @@ import java.util.List;
 public class OrderMenuRequestDto {
     private Long restaurantId;
     private List<OrderFoodsRequestDto> foods;
+    private int x;
+    private int y;
 }
+

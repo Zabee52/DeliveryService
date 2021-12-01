@@ -1,6 +1,6 @@
 package com.sparta.delivery.models;
 
-import com.sparta.delivery.dto.RestaurantDto;
+import com.sparta.delivery.dto.RestaurantRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,12 +25,20 @@ public class Restaurant {
     @Column(nullable = false)
     private int deliveryFee;
 
+    @Column(nullable = false)
+    private int x;
+
+    @Column(nullable = false)
+    private int y;
+
     @OneToMany(mappedBy = "restaurant")
     private final List<OrderMenu> orderMenuList = new ArrayList<>();
 
-    public Restaurant(RestaurantDto restaurantDto) {
+    public Restaurant(RestaurantRequestDto restaurantDto) {
         this.name = restaurantDto.getName();
         this.minOrderPrice = restaurantDto.getMinOrderPrice();
         this.deliveryFee = restaurantDto.getDeliveryFee();
+        this.x = restaurantDto.getX();
+        this.y = restaurantDto.getY();
     }
 }

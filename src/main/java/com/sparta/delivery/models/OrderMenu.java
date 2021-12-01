@@ -24,11 +24,15 @@ public class OrderMenu {
     @JoinColumn(nullable = false)
     private Restaurant restaurant;
 
+    @Column(nullable = false)
+    private int deliveryFee;
+
     @OneToMany(mappedBy = "orderMenu")
     private List<OrderFood> foods = new ArrayList<>();
 
-    public OrderMenu(int totalPrice, Restaurant restaurant) {
-        this.totalPrice = totalPrice;
+    public OrderMenu(Restaurant restaurant, int totalPrice, int deliveryFee) {
         this.restaurant = restaurant;
+        this.totalPrice = totalPrice;
+        this.deliveryFee = deliveryFee;
     }
 }

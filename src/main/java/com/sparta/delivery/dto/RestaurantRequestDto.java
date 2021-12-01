@@ -9,9 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RestaurantDto {
+public class RestaurantRequestDto {
     private Long id;
     private String name;
     private int minOrderPrice;
     private int deliveryFee;
+    private int x;
+    private int y;
 }

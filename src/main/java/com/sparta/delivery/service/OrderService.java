@@ -68,9 +68,10 @@ public class OrderService {
             throw new IllegalArgumentException("최소주문금액(" + restaurant.getMinOrderPrice() + "원) 이상 주문하셔야 합니다.");
         }
         // 배달비 추가.
-        totalPrice += restaurant.getDeliveryFee();
+        int deliveryFee = deliveryFeeCalcProc(restaurant, orderMenuRequestDto.getX(), orderMenuRequestDto.getY());
+        totalPrice += deliveryFee;
 
-        OrderMenu orderMenu = orderMenuRepository.save(new OrderMenu(totalPrice, restaurant));
+        OrderMenu orderMenu = orderMenuRepository.save(new OrderMenu(restaurant, totalPrice, deliveryFee));
 
         for (OrderFood orderFood : foods) {
             orderFood.setOrderMenu(orderMenu);
@@ -80,15 +81,22 @@ public class OrderService {
         return new OrderMenuResponseDto(
                 restaurant.getName(),
                 foodsDto,
-                restaurant.getDeliveryFee(),
+                deliveryFee,
                 totalPrice);
+    }
+
+    private int deliveryFeeCalcProc(Restaurant restaurant, int x, int y) {
+        // 1. 배달비 받기
+        int result = restaurant.getDeliveryFee();
+        // 2. 거리별 배달비 합산. 현재는 1km(정수 1)당 500원씩 할증됨.
+        result += (Math.abs(restaurant.getX() - x) + Math.abs(restaurant.getY() - y)) * 500;
+
+        return result;
     }
 
     public List<OrderMenuResponseDto> getOrders() {
         return getOrderMenuResponseDtos(orderMenuRepository.findAll());
     }
-
-
 
     private List<OrderMenuResponseDto> getOrderMenuResponseDtos(List<OrderMenu> orderMenuList) {
         List<OrderMenuResponseDto> result = new ArrayList<>();
@@ -100,7 +108,7 @@ public class OrderService {
             result.add(new OrderMenuResponseDto(
                     orderMenu.getRestaurant().getName(),
                     orderFoodsResponseDtos,
-                    orderMenu.getRestaurant().getDeliveryFee(),
+                    orderMenu.getDeliveryFee(),
                     orderMenu.getTotalPrice()));
         }
 
