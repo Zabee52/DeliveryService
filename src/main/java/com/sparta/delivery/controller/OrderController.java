@@ -1,7 +1,7 @@
 package com.sparta.delivery.controller;
 
-import com.sparta.delivery.dto.OrderMenuRequestDto;
-import com.sparta.delivery.dto.OrderMenuResponseDto;
+import com.sparta.delivery.dto.OrdersRequestDto;
+import com.sparta.delivery.dto.OrdersResponseDto;
 import com.sparta.delivery.models.UserRoleEnum;
 import com.sparta.delivery.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +20,13 @@ public class OrderController {
 
     @Secured(UserRoleEnum.Authority.USER)
     @GetMapping("/orders")
-    public List<OrderMenuResponseDto> getOrders() {
+    public List<OrdersResponseDto> getOrders() {
         return orderService.getOrders();
     }
 
     @Secured(UserRoleEnum.Authority.USER)
     @PostMapping("/order/request")
-    public OrderMenuResponseDto requestOrder(@RequestBody OrderMenuRequestDto orderMenuRequestDto) {
+    public OrdersResponseDto requestOrder(@RequestBody OrdersRequestDto orderMenuRequestDto) {
         return orderService.requestOrder(orderMenuRequestDto);
     }
 }

@@ -2,8 +2,8 @@ package com.sparta.delivery.service;
 
 import com.sparta.delivery.dto.OrderFoodsRequestDto;
 import com.sparta.delivery.dto.OrderFoodsResponseDto;
-import com.sparta.delivery.dto.OrderMenuRequestDto;
-import com.sparta.delivery.dto.OrderMenuResponseDto;
+import com.sparta.delivery.dto.OrdersRequestDto;
+import com.sparta.delivery.dto.OrdersResponseDto;
 import com.sparta.delivery.models.Food;
 import com.sparta.delivery.models.OrderFood;
 import com.sparta.delivery.models.Orders;
@@ -26,7 +26,7 @@ public class OrderService {
     private final FoodRepository foodRepository;
     private final OrderFoodRepository orderFoodRepository;
 
-    public OrderMenuResponseDto requestOrder(OrderMenuRequestDto orderMenuRequestDto) {
+    public OrdersResponseDto requestOrder(OrdersRequestDto orderMenuRequestDto) {
         // 레스토랑 ID로 레스토랑 이름 탐색
         Restaurant restaurant = restaurantRepository.findById(orderMenuRequestDto.getRestaurantId()).orElse(null);
         // 유효하지 않은 레스토랑 정보일 경우 에러 발생
@@ -78,7 +78,7 @@ public class OrderService {
             orderFoodRepository.save(orderFood);
         }
 
-        return new OrderMenuResponseDto(
+        return new OrdersResponseDto(
                 restaurant.getName(),
                 foodsDto,
                 deliveryFee,
@@ -94,17 +94,17 @@ public class OrderService {
         return result;
     }
 
-    public List<OrderMenuResponseDto> getOrders() {
+    public List<OrdersResponseDto> getOrders() {
         return getOrderMenuResponseDtos(orderMenuRepository.findAll());
     }
 
-    private List<OrderMenuResponseDto> getOrderMenuResponseDtos(List<Orders> orderMenuList) {
-        List<OrderMenuResponseDto> result = new ArrayList<>();
+    private List<OrdersResponseDto> getOrderMenuResponseDtos(List<Orders> orderMenuList) {
+        List<OrdersResponseDto> result = new ArrayList<>();
 
         for (Orders orderMenu : orderMenuList) {
             // OrderMenuResponseDto 구성
             // name, Foods, deliveryFee, totalPrice
-            result.add(new OrderMenuResponseDto(
+            result.add(new OrdersResponseDto(
                     orderMenu.getRestaurant().getName(),
                     getOrderFoodsResponseDtos(orderMenu),
                     orderMenu.getDeliveryFee(),

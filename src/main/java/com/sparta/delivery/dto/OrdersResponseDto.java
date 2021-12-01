@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderMenuResponseDto {
+public class OrdersResponseDto {
     private String restaurantName;
     private List<OrderFoodsResponseDto> foods;
     private int deliveryFee;
