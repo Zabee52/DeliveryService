@@ -21,9 +21,21 @@ public class RestaurantController {
         return restaurantService.getRestaurants(x, y);
     }
 
+    @Secured(UserRoleEnum.Authority.USER)
+    @GetMapping("/restaurants/{category}")
+    public List<RestaurantResponseDto> getRestaurants(@PathVariable String category, @RequestParam int x, @RequestParam int y){
+        return restaurantService.getRestaurantsByCategory(category.toUpperCase(), x, y);
+    }
+
     @Secured(UserRoleEnum.Authority.OWNER)
     @PostMapping("/restaurant/register")
     public RestaurantResponseDto registerRestaurant(@RequestBody RestaurantRequestDto restaurantDto){
-        return restaurantService.resgisterRestaurant(restaurantDto);
+        return restaurantService.registerRestaurant(restaurantDto);
+    }
+
+    @Secured(UserRoleEnum.Authority.OWNER)
+    @GetMapping("/restaurant/{restaurantId}/status")
+    public String registerRestaurant(@PathVariable Long restaurantId, @RequestParam String status){
+        return restaurantService.restaurantStatusChange(restaurantId, status);
     }
 }

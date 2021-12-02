@@ -1,6 +1,7 @@
 package com.sparta.delivery.controller;
 
-import com.sparta.delivery.dto.FoodDto;
+import com.sparta.delivery.dto.FoodRequestDto;
+import com.sparta.delivery.dto.FoodResponseDto;
 import com.sparta.delivery.models.UserRoleEnum;
 import com.sparta.delivery.service.FoodService;
 import lombok.RequiredArgsConstructor;
@@ -16,13 +17,13 @@ public class FoodController {
 
     @Secured(UserRoleEnum.Authority.USER)
     @GetMapping("/restaurant/{restaurantId}/foods")
-    public List<FoodDto> getFoods(@PathVariable Long restaurantId){
+    public List<FoodResponseDto> getFoods(@PathVariable Long restaurantId){
         return foodService.getFoods(restaurantId);
     }
 
     @Secured(UserRoleEnum.Authority.OWNER)
     @PostMapping("/restaurant/{restaurantId}/food/register")
-    public void addFood(@PathVariable Long restaurantId, @RequestBody List<FoodDto> foodDtos){
+    public void addFood(@PathVariable Long restaurantId, @RequestBody List<FoodRequestDto> foodDtos){
         foodService.addFood(restaurantId, foodDtos);
     }
 }

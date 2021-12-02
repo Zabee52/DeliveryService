@@ -31,11 +31,22 @@ public class Restaurant {
     @Column(nullable = false)
     private int y;
 
+    @Column(nullable = false)
+    private RestaurantStatusEnum restaurantStatusEnum;
+
+    @OneToMany(mappedBy = "restaurant")
+    private List<Food> foodList;
+
+    public void setRestaurantStatusEnum(RestaurantStatusEnum restaurantStatusEnum) {
+        this.restaurantStatusEnum = restaurantStatusEnum;
+    }
+
     public Restaurant(RestaurantRequestDto restaurantDto) {
         this.name = restaurantDto.getName();
         this.minOrderPrice = restaurantDto.getMinOrderPrice();
         this.deliveryFee = restaurantDto.getDeliveryFee();
         this.x = restaurantDto.getX();
         this.y = restaurantDto.getY();
+        this.restaurantStatusEnum = RestaurantStatusEnum.OPEN;
     }
 }

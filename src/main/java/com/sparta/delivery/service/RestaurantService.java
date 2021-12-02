@@ -1,15 +1,18 @@
 package com.sparta.delivery.service;
 
-import com.sparta.delivery.dto.OrderFoodsRequestDto;
 import com.sparta.delivery.dto.RestaurantRequestDto;
 import com.sparta.delivery.dto.RestaurantResponseDto;
+import com.sparta.delivery.models.Food;
+import com.sparta.delivery.models.FoodCategoryEnum;
 import com.sparta.delivery.models.Restaurant;
+import com.sparta.delivery.models.RestaurantStatusEnum;
 import com.sparta.delivery.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,13 +25,16 @@ public class RestaurantService {
         List<RestaurantResponseDto> response = new ArrayList<>();
 
         for (Restaurant restaurant : restaurantList) {
-            response.add(restaurantDtoSetting(restaurant));
+            // 레스토랑 상태가 OPEN일 때만 조회.
+            if(restaurant.getRestaurantStatusEnum() == RestaurantStatusEnum.OPEN){
+                response.add(restaurantDtoSetting(restaurant));
+            }
         }
 
         return response;
     }
 
-    public RestaurantResponseDto resgisterRestaurant(RestaurantRequestDto restaurantDto) {
+    public RestaurantResponseDto registerRestaurant(RestaurantRequestDto restaurantDto) {
         // 음식점 유효성 검사
         validCheck(restaurantDto);
 
@@ -64,5 +70,45 @@ public class RestaurantService {
         } else if (x < 0 || x > 99 || y < 0 || y > 99) {
             throw new IllegalArgumentException("위치는 0부터 99까지만 입력 가능합니다.");
         }
+    }
+
+    public String restaurantStatusChange(Long restaurantId, String status) {
+        Optional<Restaurant> found = restaurantRepository.findById(restaurantId);
+        if(!found.isPresent()){
+            throw new NullPointerException("유효하지 않은 음식점입니다.");
+        }
+
+        found.get().setRestaurantStatusEnum(RestaurantStatusEnum.valueOf(status));
+
+        return "레스토랑 상태 수정 완료";
+    }
+
+    public List<RestaurantResponseDto> getRestaurantsByCategory(String category, int x, int y) {
+        // 카테고리에 기반한 음식점 목록을 출력하는 메소드
+        List<Restaurant> restaurantList = restaurantRepository.findAllByXBetweenAndYBetween(x - 3, x + 3, y - 3, y + 3);
+        List<RestaurantResponseDto> response = new ArrayList<>();
+
+        for (Restaurant restaurant : restaurantList) {
+            // 레스토랑 상태가 OPEN일 때만 조회.
+            if(restaurant.getRestaurantStatusEnum() != RestaurantStatusEnum.OPEN){
+                continue;
+            }
+
+            // Food 돌면서 카테고리 정보 수집.
+            boolean isValidCategory = false;
+            for(Food food : restaurant.getFoodList()){
+                if(food.getFoodCategoryEnum().toString().equals(category)){
+                    isValidCategory = true;
+                    break;
+                }
+            }
+
+            // 조회 카테고리에 해당할 경우 OK. 출력.
+            if(isValidCategory){
+                response.add(restaurantDtoSetting(restaurant));
+            }
+        }
+
+        return response;
     }
 }

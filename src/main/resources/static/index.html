@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <title>Title</title>
 </head>
 <script>
@@ -32,15 +32,28 @@
             [
                 {
                     name: "쉑버거 더블",
-                    price: 10900
+                    price: 10900,
+                    category: "BURGER",
+                    option: [
+                        {
+                            option: "치즈 추가",
+                            price: 500
+                        },
+                        {
+                            option: "패티 추가",
+                            price: 2500
+                        }
+                    ]
                 },
                 {
                     name: "치즈 감자튀김",
-                    price: 4900
+                    price: 4900,
+                    category: "BURGER"
                 },
                 {
                     name: "쉐이크",
-                    price: 5900
+                    price: 5900,
+                    category: "DESSERT"
                 }
             ];
 

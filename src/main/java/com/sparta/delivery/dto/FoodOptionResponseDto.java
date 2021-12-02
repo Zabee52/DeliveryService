@@ -7,10 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class FoodDto {
-    private Long id;
-    private String name;
+@AllArgsConstructor
+public class FoodOptionResponseDto {
+    private String option;
     private int price;
 }

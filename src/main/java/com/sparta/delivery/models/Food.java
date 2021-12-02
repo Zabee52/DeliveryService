@@ -1,6 +1,6 @@
 package com.sparta.delivery.models;
 
-import com.sparta.delivery.dto.FoodDto;
+import com.sparta.delivery.dto.FoodRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,9 +26,16 @@ public class Food {
     @JoinColumn(nullable = false)
     private Restaurant restaurant;
 
-    public Food(Restaurant restaurant, FoodDto foodDto) {
+    @Column
+    private FoodCategoryEnum foodCategoryEnum;
+
+    @OneToMany(mappedBy = "food")
+    List<FoodOption> foodOptionList = new ArrayList<>();
+
+    public Food(Restaurant restaurant, FoodRequestDto foodDto) {
         this.restaurant = restaurant;
         this.name = foodDto.getName();
         this.price = foodDto.getPrice();
+        this.foodCategoryEnum = FoodCategoryEnum.valueOf(foodDto.getCategory());
     }
 }
