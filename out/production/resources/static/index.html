@@ -67,10 +67,35 @@
             }
         })
     }
+
+    function order(){
+        let data =
+            {
+                restaurantId: 1,
+                foods: [
+                    { id: 4, quantity: 1,},
+                    { id: 5, quantity: 2 },
+                    { id: 6, quantity: 3 }
+                ],
+                x: 6,
+                y: 2
+            };
+
+        $.ajax({
+            type: 'POST',
+            url: '/order/request',
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (response) {
+                console.log(response);
+            }
+        })
+    }
 </script>
 <body>
 login complete!
 <Button onclick="restaurant()">레스토랑 추가</Button>
 <Button onclick="foods()">음식 추가</Button>
+<Button onclick="order()">주문하기</Button>
 </body>
 </html>

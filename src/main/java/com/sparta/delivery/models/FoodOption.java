@@ -20,17 +20,8 @@ public class FoodOption {
     @Column(nullable = false)
     private int price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    private Food food;
-
-    public FoodOption(FoodOptionRequestDto foodOptionRequestDto, Food food) {
+    public FoodOption(FoodOptionRequestDto foodOptionRequestDto) {
         this.option = foodOptionRequestDto.getOption();
         this.price = foodOptionRequestDto.getPrice();
-        this.food = food;
-    }
-
-    public void setFood(Food food) {
-        this.food = food;
     }
 }

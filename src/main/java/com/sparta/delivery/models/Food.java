@@ -29,7 +29,7 @@ public class Food {
     @Column
     private FoodCategoryEnum foodCategoryEnum;
 
-    @OneToMany(mappedBy = "food")
+    @OneToMany(cascade = CascadeType.ALL)
     List<FoodOption> foodOptionList = new ArrayList<>();
 
     public Food(Restaurant restaurant, FoodRequestDto foodDto) {
@@ -37,5 +37,13 @@ public class Food {
         this.name = foodDto.getName();
         this.price = foodDto.getPrice();
         this.foodCategoryEnum = FoodCategoryEnum.valueOf(foodDto.getCategory());
+    }
+
+    public Food(Restaurant restaurant, FoodRequestDto foodDto, List<FoodOption> foodOptionList) {
+        this.restaurant = restaurant;
+        this.name = foodDto.getName();
+        this.price = foodDto.getPrice();
+        this.foodCategoryEnum = FoodCategoryEnum.valueOf(foodDto.getCategory());
+        this.foodOptionList = foodOptionList;
     }
 }

@@ -27,12 +27,13 @@ public class Orders {
     @Column(nullable = false)
     private int deliveryFee;
 
-    @OneToMany(mappedBy = "orderMenu")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<OrderFood> foods = new ArrayList<>();
 
-    public Orders(Restaurant restaurant, int totalPrice, int deliveryFee) {
+    public Orders(Restaurant restaurant, int totalPrice, int deliveryFee, List<OrderFood> foods) {
         this.restaurant = restaurant;
         this.totalPrice = totalPrice;
         this.deliveryFee = deliveryFee;
+        this.foods = foods;
     }
 }

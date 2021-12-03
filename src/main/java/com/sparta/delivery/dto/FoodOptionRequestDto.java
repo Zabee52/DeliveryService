@@ -1,5 +1,6 @@
 package com.sparta.delivery.dto;
 
+import com.sparta.delivery.models.FoodOption;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

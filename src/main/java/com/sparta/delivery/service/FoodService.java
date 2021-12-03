@@ -34,40 +34,32 @@ public class FoodService {
 
         // 음식점별 음식을 추가하는 메소드
         List<Food> foodList = new ArrayList<>();
-        List<FoodOption> foodOptionList = new ArrayList<>();
         for (FoodRequestDto foodDto : foodDtos) {
             // 유효성 검사
             foodDtoValidCheck(restaurantId, foodDto, foodList);
-            // 음식 등록
-            Food food = new Food(restaurant.get(), foodDto);
-            foodList.add(food);
-
+        }
+        for (FoodRequestDto foodDto : foodDtos){
+            List<FoodOption> foodOptionList = new ArrayList<>();
             // 음식 옵션 등록
             for (FoodOptionRequestDto foodOptionRequestDto : foodDto.getOption()) {
-                FoodOption foodOption = new FoodOption(foodOptionRequestDto, food);
+                FoodOption foodOption = new FoodOption(foodOptionRequestDto);
                 foodOptionList.add(foodOption);
             }
+
+            if(foodOptionList.size() > 0){
+                // 데이터베이스에 저장하면서 foodOptionList에 id값 추가.
+                foodOptionList = foodOptionRepository.saveAll(foodOptionList);
+            }
+
+            // 음식 등록
+            Food food = new Food(restaurant.get(), foodDto, foodOptionList);
+            foodList.add(food);
         }
 
         if (foodDtos.size() > 0) {
-            List<Food> foodResultList = foodRepository.saveAll(foodList);
-            foodOptionSetting(foodResultList, foodOptionList);
-
-            foodOptionRepository.saveAll(foodOptionList);
+            foodRepository.saveAll(foodList);
         } else {
             throw new IllegalArgumentException("음식을 입력해주세요.");
-        }
-    }
-
-    // 음식점에 음식 정보를 추가할 때, 옵션이 있을 경우 옵션도 같이 추가해주는 메소드
-    private void foodOptionSetting(List<Food> foodResultList, List<FoodOption> foodOptionList) {
-        for (Food food : foodResultList) {
-            for(FoodOption foodOption : foodOptionList){
-                if(food.getName().equals(foodOption.getFood().getName())){
-                    foodOption.setFood(food);
-                    break;
-                }
-            }
         }
     }
 
@@ -88,15 +80,16 @@ public class FoodService {
                     food.getId(),
                     food.getName(),
                     food.getPrice(),
-                    foodOptionResponseDtoListSetting(food)));
+                    foodOptionResponseDtoListSetting(food.getFoodOptionList()))
+            );
         }
         return result;
     }
 
-    private List<FoodOptionResponseDto> foodOptionResponseDtoListSetting(Food food) {
+    private List<FoodOptionResponseDto> foodOptionResponseDtoListSetting(List<FoodOption> foodOptionList) {
         List<FoodOptionResponseDto> result = new ArrayList<>();
 
-        for(FoodOption foodOption : food.getFoodOptionList()){
+        for(FoodOption foodOption : foodOptionList){
             result.add(new FoodOptionResponseDto(
                     foodOption.getOption(),
                     foodOption.getPrice()));

@@ -60,7 +60,7 @@ public class OrderService {
             // 전체 가격에 합산.
             totalPrice += orderFoodsResponseDto.getPrice();
             // OrderFood 생성 및 리스트에 주입
-            foods.add(new OrderFood(quantity, food));
+            foods.add(orderFoodRepository.save(new OrderFood(quantity, food)));
             foodsDto.add(orderFoodsResponseDto);
         }
 
@@ -71,12 +71,7 @@ public class OrderService {
         int deliveryFee = deliveryFeeCalcProc(restaurant, orderMenuRequestDto.getX(), orderMenuRequestDto.getY());
         totalPrice += deliveryFee;
 
-        Orders orderMenu = orderMenuRepository.save(new Orders(restaurant, totalPrice, deliveryFee));
-
-        for (OrderFood orderFood : foods) {
-            orderFood.setOrderMenu(orderMenu);
-            orderFoodRepository.save(orderFood);
-        }
+        orderMenuRepository.save(new Orders(restaurant, totalPrice, deliveryFee, foods));
 
         return new OrdersResponseDto(
                 restaurant.getName(),
@@ -106,7 +101,7 @@ public class OrderService {
             // name, Foods, deliveryFee, totalPrice
             result.add(new OrdersResponseDto(
                     orderMenu.getRestaurant().getName(),
-                    getOrderFoodsResponseDtos(orderMenu),
+                    getOrderFoodsResponseDtos(orderMenu.getFoods()),
                     orderMenu.getDeliveryFee(),
                     orderMenu.getTotalPrice()));
         }
@@ -114,11 +109,10 @@ public class OrderService {
         return result;
     }
 
-    private List<OrderFoodsResponseDto> getOrderFoodsResponseDtos(Orders orderMenu) {
+    private List<OrderFoodsResponseDto> getOrderFoodsResponseDtos(List<OrderFood> foods) {
         List<OrderFoodsResponseDto> result = new ArrayList<>();
 
-        List<OrderFood> orderFoodList = orderFoodRepository.findAllByOrderMenu(orderMenu);
-        for (OrderFood orderFood : orderFoodList) {
+        for (OrderFood orderFood : foods) {
             String foodName = orderFood.getFood().getName();
             int quantity = orderFood.getQuantity();
             int price = quantity * orderFood.getFood().getPrice();
