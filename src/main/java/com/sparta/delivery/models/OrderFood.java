@@ -14,15 +14,17 @@ public class OrderFood {
     private Long id;
 
     @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     private int quantity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    private Food food;
+    @Column(nullable = false)
+    private int price;
 
-
-    public OrderFood(int quantity, Food food) {
+    public OrderFood(String name, int quantity, int price) {
+        this.name = name;
         this.quantity = quantity;
-        this.food = food;
+        this.price = price;
     }
 }

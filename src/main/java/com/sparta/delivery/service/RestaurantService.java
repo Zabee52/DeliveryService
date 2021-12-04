@@ -3,7 +3,6 @@ package com.sparta.delivery.service;
 import com.sparta.delivery.dto.RestaurantRequestDto;
 import com.sparta.delivery.dto.RestaurantResponseDto;
 import com.sparta.delivery.models.Food;
-import com.sparta.delivery.models.FoodCategoryEnum;
 import com.sparta.delivery.models.Restaurant;
 import com.sparta.delivery.models.RestaurantStatusEnum;
 import com.sparta.delivery.repository.RestaurantRepository;
@@ -25,9 +24,9 @@ public class RestaurantService {
         List<RestaurantResponseDto> response = new ArrayList<>();
 
         for (Restaurant restaurant : restaurantList) {
-            // 레스토랑 상태가 OPEN일 때만 조회.
-            if(restaurant.getRestaurantStatusEnum() == RestaurantStatusEnum.OPEN){
-                response.add(restaurantDtoSetting(restaurant));
+            // 레스토랑 상태가 OPEN 일 때만 조회.
+            if (restaurant.getRestaurantStatusEnum() == RestaurantStatusEnum.OPEN) {
+                response.add(new RestaurantResponseDto(restaurant));
             }
         }
 
@@ -39,16 +38,8 @@ public class RestaurantService {
         validCheck(restaurantDto);
 
         // 통과시 저장
-        return restaurantDtoSetting(restaurantRepository.save(new Restaurant(restaurantDto)));
-    }
-
-    private RestaurantResponseDto restaurantDtoSetting(Restaurant restaurant) {
-        return new RestaurantResponseDto(
-                restaurant.getId(),
-                restaurant.getName(),
-                restaurant.getMinOrderPrice(),
-                restaurant.getDeliveryFee()
-        );
+        Restaurant restaurant = restaurantRepository.save(new Restaurant(restaurantDto));
+        return new RestaurantResponseDto(restaurant);
     }
 
     private void validCheck(RestaurantRequestDto restaurantDto) {
@@ -74,7 +65,7 @@ public class RestaurantService {
 
     public String restaurantStatusChange(Long restaurantId, String status) {
         Optional<Restaurant> found = restaurantRepository.findById(restaurantId);
-        if(!found.isPresent()){
+        if (!found.isPresent()) {
             throw new NullPointerException("유효하지 않은 음식점입니다.");
         }
 
@@ -89,23 +80,23 @@ public class RestaurantService {
         List<RestaurantResponseDto> response = new ArrayList<>();
 
         for (Restaurant restaurant : restaurantList) {
-            // 레스토랑 상태가 OPEN일 때만 조회.
-            if(restaurant.getRestaurantStatusEnum() != RestaurantStatusEnum.OPEN){
+            // 레스토랑 상태가 OPEN 일 때만 조회.
+            if (restaurant.getRestaurantStatusEnum() != RestaurantStatusEnum.OPEN) {
                 continue;
             }
 
             // Food 돌면서 카테고리 정보 수집.
             boolean isValidCategory = false;
-            for(Food food : restaurant.getFoodList()){
-                if(food.getFoodCategoryEnum().toString().equals(category)){
+            for (Food food : restaurant.getFoodList()) {
+                if (food.getFoodCategoryEnum().toString().equals(category)) {
                     isValidCategory = true;
                     break;
                 }
             }
 
             // 조회 카테고리에 해당할 경우 OK. 출력.
-            if(isValidCategory){
-                response.add(restaurantDtoSetting(restaurant));
+            if (isValidCategory) {
+                response.add(new RestaurantResponseDto(restaurant));
             }
         }
 

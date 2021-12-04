@@ -1,5 +1,6 @@
 package com.sparta.delivery.dto;
 
+import com.sparta.delivery.models.Restaurant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,4 +15,11 @@ public class RestaurantResponseDto {
     private String name;
     private int minOrderPrice;
     private int deliveryFee;
+
+    public RestaurantResponseDto(Restaurant restaurant) {
+        this.id = restaurant.getId();
+        this.name = restaurant.getName();
+        this.minOrderPrice = restaurant.getMinOrderPrice();
+        this.deliveryFee = restaurant.getDeliveryFee();
+    }
 }

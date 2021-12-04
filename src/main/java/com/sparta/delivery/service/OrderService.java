@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class OrderService {
-    private final OrdersRepository orderMenuRepository;
+    private final OrdersRepository ordersRepository;
     private final RestaurantRepository restaurantRepository;
     private final FoodRepository foodRepository;
     private final OrderFoodRepository orderFoodRepository;
@@ -36,12 +36,12 @@ public class OrderService {
 
         // 식품 목록 생성
         List<OrderFood> foods = new ArrayList<>();
-        List<OrderFoodsResponseDto> foodsDto = new ArrayList<>();
+        List<OrderFoodsResponseDto> foodsResponseDtoList = new ArrayList<>();
 
         // 전체 가격 계산.
         int totalPrice = 0;
 
-        // 유효성 검사 후 foodsDto에 데이터를 삽입
+        // 유효성 검사 후 foodsDto 에 데이터를 삽입
         for (OrderFoodsRequestDto orderFoodsRequestDto : orderMenuRequestDto.getFoods()) {
             // 수량 조건 맞지 않을 경우 에러 발생
             int quantity = orderFoodsRequestDto.getQuantity();
@@ -52,16 +52,16 @@ public class OrderService {
             Food food = foodRepository.findById(orderFoodsRequestDto.getId()).orElseThrow(
                     () -> new NullPointerException("유효하지 않은 음식입니다.")
             );
+            OrderFood orderFood = new OrderFood(food.getName(), quantity, food.getPrice() * quantity);
+
             // 출력용 Dto 생성
-            OrderFoodsResponseDto orderFoodsResponseDto = new OrderFoodsResponseDto(food.getName(),
-                    quantity,
-                    food.getPrice() * quantity);
+            OrderFoodsResponseDto orderFoodsResponseDto = new OrderFoodsResponseDto(orderFood);
 
             // 전체 가격에 합산.
-            totalPrice += orderFoodsResponseDto.getPrice();
+            totalPrice += orderFood.getPrice();
             // OrderFood 생성 및 리스트에 주입
-            foods.add(orderFoodRepository.save(new OrderFood(quantity, food)));
-            foodsDto.add(orderFoodsResponseDto);
+            foods.add(orderFoodRepository.save(orderFood));
+            foodsResponseDtoList.add(orderFoodsResponseDto);
         }
 
         if (totalPrice < restaurant.getMinOrderPrice()) {
@@ -71,13 +71,10 @@ public class OrderService {
         int deliveryFee = deliveryFeeCalcProc(restaurant, orderMenuRequestDto.getX(), orderMenuRequestDto.getY());
         totalPrice += deliveryFee;
 
-        orderMenuRepository.save(new Orders(restaurant, totalPrice, deliveryFee, foods));
+        Orders orders = new Orders(restaurant.getName(), totalPrice, deliveryFee, foods);
+        ordersRepository.save(orders);
 
-        return new OrdersResponseDto(
-                restaurant.getName(),
-                foodsDto,
-                deliveryFee,
-                totalPrice);
+        return new OrdersResponseDto(orders, foodsResponseDtoList);
     }
 
     private int deliveryFeeCalcProc(Restaurant restaurant, int x, int y) {
@@ -90,34 +87,26 @@ public class OrderService {
     }
 
     public List<OrdersResponseDto> getOrders() {
-        return getOrderMenuResponseDtos(orderMenuRepository.findAll());
-    }
-
-    private List<OrdersResponseDto> getOrderMenuResponseDtos(List<Orders> orderMenuList) {
-        List<OrdersResponseDto> result = new ArrayList<>();
-
-        for (Orders orderMenu : orderMenuList) {
+        // Orders, OrderFood 엔티티를 dto 에 포장해서 내보내기.
+        List<Orders> ordersList = ordersRepository.findAll();
+        List<OrdersResponseDto> ordersResponseDtoList = new ArrayList<>();
+        for (Orders orders : ordersList) {
             // OrderMenuResponseDto 구성
-            // name, Foods, deliveryFee, totalPrice
-            result.add(new OrdersResponseDto(
-                    orderMenu.getRestaurant().getName(),
-                    getOrderFoodsResponseDtos(orderMenu.getFoods()),
-                    orderMenu.getDeliveryFee(),
-                    orderMenu.getTotalPrice()));
+            // restaurantName (음식점 이름), Foods, deliveryFee, totalPrice
+            // OrderFoodsResponseDto 구성
+            // name (Food 이름), quantity, price
+            OrdersResponseDto ordersResponseDto = new OrdersResponseDto(orders, getOrderFoodsResponseDtoList(orders.getFoods()));
+            ordersResponseDtoList.add(ordersResponseDto);
         }
-
-        return result;
+        return ordersResponseDtoList;
     }
 
-    private List<OrderFoodsResponseDto> getOrderFoodsResponseDtos(List<OrderFood> foods) {
+    private List<OrderFoodsResponseDto> getOrderFoodsResponseDtoList(List<OrderFood> foods) {
         List<OrderFoodsResponseDto> result = new ArrayList<>();
 
         for (OrderFood orderFood : foods) {
-            String foodName = orderFood.getFood().getName();
-            int quantity = orderFood.getQuantity();
-            int price = quantity * orderFood.getFood().getPrice();
-
-            result.add(new OrderFoodsResponseDto(foodName, quantity, price));
+            OrderFoodsResponseDto orderFoodsResponseDto = new OrderFoodsResponseDto((orderFood));
+            result.add(orderFoodsResponseDto);
         }
 
         return result;

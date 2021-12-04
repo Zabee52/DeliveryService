@@ -76,12 +76,8 @@ public class FoodService {
     private List<FoodResponseDto> foodDtoListSetting(List<Food> foods) {
         List<FoodResponseDto> result = new ArrayList<>();
         for (Food food : foods) {
-            result.add(new FoodResponseDto(
-                    food.getId(),
-                    food.getName(),
-                    food.getPrice(),
-                    foodOptionResponseDtoListSetting(food.getFoodOptionList()))
-            );
+            List<FoodOptionResponseDto> foodOptionResponseDto = foodOptionResponseDtoListSetting(food.getFoodOptionList());
+            result.add(new FoodResponseDto(food, foodOptionResponseDto));
         }
         return result;
     }
@@ -90,9 +86,8 @@ public class FoodService {
         List<FoodOptionResponseDto> result = new ArrayList<>();
 
         for(FoodOption foodOption : foodOptionList){
-            result.add(new FoodOptionResponseDto(
-                    foodOption.getOption(),
-                    foodOption.getPrice()));
+            FoodOptionResponseDto foodOptionResponseDto = new FoodOptionResponseDto(foodOption);
+            result.add(foodOptionResponseDto);
         }
 
         return result;
