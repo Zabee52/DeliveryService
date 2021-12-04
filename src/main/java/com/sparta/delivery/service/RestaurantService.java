@@ -86,17 +86,12 @@ public class RestaurantService {
             }
 
             // Food 돌면서 카테고리 정보 수집.
-            boolean isValidCategory = false;
+            // 조회 카테고리에 해당할 경우 OK. 출력.
             for (Food food : restaurant.getFoodList()) {
                 if (food.getFoodCategoryEnum().toString().equals(category)) {
-                    isValidCategory = true;
+                    response.add(new RestaurantResponseDto(restaurant));
                     break;
                 }
-            }
-
-            // 조회 카테고리에 해당할 경우 OK. 출력.
-            if (isValidCategory) {
-                response.add(new RestaurantResponseDto(restaurant));
             }
         }
 
