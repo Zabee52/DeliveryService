@@ -25,7 +25,7 @@ public class FoodService {
     private final FoodOptionRepository foodOptionRepository;
 
     // 음식점에 음식 정보를 추가하는 메소드
-    public void addFood(Long restaurantId, List<FoodRequestDto> foodDtos) {
+    public void addFood(Long restaurantId, List<FoodRequestDto> foodRequestDtoList) {
         // 레스토랑 정보 유효한지 검사
         Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
         if (!restaurant.isPresent()) {
@@ -34,11 +34,11 @@ public class FoodService {
 
         // 음식점별 음식을 추가하는 메소드
         List<Food> foodList = new ArrayList<>();
-        for (FoodRequestDto foodDto : foodDtos) {
+        for (FoodRequestDto foodDto : foodRequestDtoList) {
             // 유효성 검사
             foodDtoValidCheck(restaurantId, foodDto, foodList);
         }
-        for (FoodRequestDto foodDto : foodDtos){
+        for (FoodRequestDto foodDto : foodRequestDtoList){
             List<FoodOption> foodOptionList = new ArrayList<>();
             // 음식 옵션 등록
             for (FoodOptionRequestDto foodOptionRequestDto : foodDto.getOption()) {
@@ -47,7 +47,7 @@ public class FoodService {
             }
 
             if(foodOptionList.size() > 0){
-                // 데이터베이스에 저장하면서 foodOptionList에 id값 추가.
+                // 데이터베이스에 저장하면서 foodOptionList 에 id값 추가.
                 foodOptionList = foodOptionRepository.saveAll(foodOptionList);
             }
 
@@ -56,7 +56,7 @@ public class FoodService {
             foodList.add(food);
         }
 
-        if (foodDtos.size() > 0) {
+        if (foodRequestDtoList.size() > 0) {
             foodRepository.saveAll(foodList);
         } else {
             throw new IllegalArgumentException("음식을 입력해주세요.");

@@ -17,8 +17,9 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
-    private String restaurantName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private Restaurant restaurant;
 
     @Column(nullable = false)
     private int totalPrice;
@@ -29,8 +30,8 @@ public class Orders {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<OrderFood> foods = new ArrayList<>();
 
-    public Orders(String restaurantName, int totalPrice, int deliveryFee, List<OrderFood> foods) {
-        this.restaurantName = restaurantName;
+    public Orders(Restaurant restaurant, int totalPrice, int deliveryFee, List<OrderFood> foods) {
+        this.restaurant = restaurant;
         this.totalPrice = totalPrice;
         this.deliveryFee = deliveryFee;
         this.foods = foods;

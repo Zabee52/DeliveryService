@@ -26,9 +26,9 @@ public class OrderService {
     private final FoodRepository foodRepository;
     private final OrderFoodRepository orderFoodRepository;
 
-    public OrdersResponseDto requestOrder(OrdersRequestDto orderMenuRequestDto) {
+    public OrdersResponseDto requestOrder(OrdersRequestDto ordersRequestDto) {
         // 레스토랑 ID로 레스토랑 이름 탐색
-        Restaurant restaurant = restaurantRepository.findById(orderMenuRequestDto.getRestaurantId()).orElse(null);
+        Restaurant restaurant = restaurantRepository.findById(ordersRequestDto.getRestaurantId()).orElse(null);
         // 유효하지 않은 레스토랑 정보일 경우 에러 발생
         if (restaurant == null) {
             throw new NullPointerException("유효하지 않은 음식점입니다.");
@@ -42,7 +42,7 @@ public class OrderService {
         int totalPrice = 0;
 
         // 유효성 검사 후 foodsDto 에 데이터를 삽입
-        for (OrderFoodsRequestDto orderFoodsRequestDto : orderMenuRequestDto.getFoods()) {
+        for (OrderFoodsRequestDto orderFoodsRequestDto : ordersRequestDto.getFoods()) {
             // 수량 조건 맞지 않을 경우 에러 발생
             int quantity = orderFoodsRequestDto.getQuantity();
             if (quantity < 1 || quantity > 100) {
@@ -68,10 +68,10 @@ public class OrderService {
             throw new IllegalArgumentException("최소주문금액(" + restaurant.getMinOrderPrice() + "원) 이상 주문하셔야 합니다.");
         }
         // 배달비 추가.
-        int deliveryFee = deliveryFeeCalcProc(restaurant, orderMenuRequestDto.getX(), orderMenuRequestDto.getY());
+        int deliveryFee = deliveryFeeCalcProc(restaurant, ordersRequestDto.getX(), ordersRequestDto.getY());
         totalPrice += deliveryFee;
 
-        Orders orders = new Orders(restaurant.getName(), totalPrice, deliveryFee, foods);
+        Orders orders = new Orders(restaurant, totalPrice, deliveryFee, foods);
         ordersRepository.save(orders);
 
         return new OrdersResponseDto(orders, foodsResponseDtoList);
@@ -91,7 +91,7 @@ public class OrderService {
         List<Orders> ordersList = ordersRepository.findAll();
         List<OrdersResponseDto> ordersResponseDtoList = new ArrayList<>();
         for (Orders orders : ordersList) {
-            // OrderMenuResponseDto 구성
+            // OrdersResponseDto 구성
             // restaurantName (음식점 이름), Foods, deliveryFee, totalPrice
             // OrderFoodsResponseDto 구성
             // name (Food 이름), quantity, price

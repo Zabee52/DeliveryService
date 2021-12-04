@@ -19,7 +19,7 @@ public class OrdersResponseDto {
     private int totalPrice;
 
     public OrdersResponseDto(Orders orders, List<OrderFoodsResponseDto> foods) {
-        this.restaurantName = orders.getRestaurantName();
+        this.restaurantName = orders.getRestaurant().getName();
         this.foods = foods;
         this.deliveryFee = orders.getDeliveryFee();
         this.totalPrice = orders.getTotalPrice();
