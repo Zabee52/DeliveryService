@@ -19,9 +19,7 @@ public class UserService {
         return userRepository.save(
                 new User(
                     userDto.getUserId(),
-                    passwordEncoder.encode(userDto.getPassword()),
-                    userDto.getUsername(),
-                    userDto.getRole()
+                    passwordEncoder.encode(userDto.getPassword())
                 )
         );
     }
